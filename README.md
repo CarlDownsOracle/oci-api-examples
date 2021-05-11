@@ -22,14 +22,15 @@ This is coded as a Flask app.  The following actions are supported:
 * Show User
 
 
-Make sure you set up a proper virtual env, activate it, and install the requirements there.
+Python 3 is required. Make sure you set up a proper virtual env, activate it, 
+and install the requirements in your virtual env:
 
     my-machine $ python -m venv venv
     my-machine $ source venv/bin/activate
     (venv) my-machine $ pip install -f requirements.txt
     (venv) source start_server.sh
 
-Use 'flask run' to start the server:
+Start the local web server:
 
     (venv) my-machine $ flask run
      * Serving Flask app "app/views.py" (lazy loading)
