@@ -28,11 +28,11 @@ and install the requirements in your virtual env:
     my-machine $ python -m venv venv
     my-machine $ source venv/bin/activate
     (venv) my-machine $ pip install -f requirements.txt
-    (venv) source start_server.sh
+
 
 Start the local web server:
 
-    (venv) my-machine $ flask run
+    (venv) my-machine source start_server.sh
      * Serving Flask app "app/views.py" (lazy loading)
      * Environment: development
      * Debug mode: on
