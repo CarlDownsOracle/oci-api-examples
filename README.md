@@ -1,8 +1,8 @@
 # OCI Utilities Example 
 
-## [Oracle Cloud](https://www.oracle.com/cloud/)
+## [Oracle Cloud Infrastructure](https://www.oracle.com/cloud/)
 
-[OCI Python API](https://oracle-cloud-infrastructure-python-sdk.readthedocs.io/en/latest/)
+[Python API](https://oracle-cloud-infrastructure-python-sdk.readthedocs.io/en/latest/)
 
 This example code will get you started accessing OCI Networking and Compute 
 information using the OCI Python API. Follow the above instructions 
