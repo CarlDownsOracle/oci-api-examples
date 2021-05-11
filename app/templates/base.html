@@ -1,0 +1,25 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>OCI Utilities</title>
+      {% endif %}
+    </head>
+    <body>
+        <div><h1>OCI Utilities</h1></div>
+
+        <hr>
+        <div><h3><a href="/compute">Show Compute Instances</a></h3></div>
+        <div><h3><a href="/vcns">Show VCNs</a></h3></div>
+        <div><h3><a href="/subnets">Show VCN Subnets</a></h3></div>
+        <div><h3><a href="/attachments">Show VNIC Attachments</a></h3></div>
+        <div><h3><a href="/vcn_with_attached_compute">Show VCN & Attached Compute Summary</a></h3></div>
+
+        <hr>
+        <div><h3><a href="/config">Show Configuration</a></h3></div>
+        <div><h3><a href="/user">Show User</a></h3></div>
+
+        {% block content %}{% endblock %}
+    </body>
+</html>
