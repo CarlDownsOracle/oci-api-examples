@@ -9,12 +9,12 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def default_route():
-    context = {}
+    context = {'scope': get_search_scope()}
     return render_template('base.html', context=context)
 
 
 @app.route('/config')
-def show_config_route():
+def get_config_route():
     response = get_configuration()
     return response
 
@@ -86,7 +86,7 @@ def get_subnets_route():
 
 
 @app.route('/vcn_with_attached_compute')
-def get_vcn_compute_route():
+def get_vcn_compute_digest_route():
     data = vcn_with_attached_compute()
     serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
     response = app.response_class(

@@ -11,7 +11,7 @@ referenced in the link above.
 
 ## Capabilities
 
-This is coded as a Flask app.  The following actions are supported:
+The following Web actions are supported:
 
 * Show Compute Instances
 * Show VCNs
@@ -21,8 +21,11 @@ This is coded as a Flask app.  The following actions are supported:
 * Show Configuration
 * Show User
 
+## Implementation
 
-Python 3 is required. Make sure you set up a proper virtual env, activate it, 
+This is coded as a Flask app with Python 3 as a prerequisite. 
+
+Set up a proper virtual env, activate it, 
 and install the requirements in your virtual env:
 
     my-machine $ python -m venv venv
@@ -32,7 +35,7 @@ and install the requirements in your virtual env:
 
 Start the local web server:
 
-    (venv) my-machine source start_server.sh
+    (venv) my-machine $ source start_server.sh
      * Serving Flask app "app/views.py" (lazy loading)
      * Environment: development
      * Debug mode: on

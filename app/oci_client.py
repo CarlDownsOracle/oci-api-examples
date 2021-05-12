@@ -1,4 +1,5 @@
 import oci
+from oci.identity import IdentityClient
 from oci.core import VirtualNetworkClient, ComputeClient
 from app.oci_config import get_configuration
 
@@ -9,8 +10,20 @@ compartment = config.get('compartment')
 if compartment is None:
     compartment = tenancy
 
+identity_client = IdentityClient(config)
 compute_client = ComputeClient(config)
 network_client = VirtualNetworkClient(config)
+
+
+def get_search_scope():
+    return compartment
+
+
+def get_oci_user():
+    user = identity_client.get_user(config["user"]).data
+    # print(identity_client)
+    # print(identity_client.base_client.endpoint)
+    return user
 
 
 def get_compute_instances():

@@ -10,15 +10,17 @@
         <div><h1>OCI Utilities</h1></div>
 
         <hr>
-        <div><h3><a href="/compute">Show Compute Instances</a></h3></div>
-        <div><h3><a href="/vcns">Show VCNs</a></h3></div>
-        <div><h3><a href="/subnets">Show VCN Subnets</a></h3></div>
-        <div><h3><a href="/attachments">Show VNIC Attachments</a></h3></div>
-        <div><h3><a href="/vcn_with_attached_compute">Show VCN & Attached Compute Summary</a></h3></div>
+        <div><h3>Searching Compartment:</h3> <i>{{ context['scope'] }}</i></div>
+        <br />
 
+        <div><h3><a href="{{ url_for('get_compute_route') }}">Show Compute Instances</a></h3></div>
+        <div><h3><a href="{{ url_for('get_vcns_route') }}">Show VCNs</a></h3></div>
+        <div><h3><a href="{{ url_for('get_subnets_route') }}">Show Subnets</a></h3></div>
+        <div><h3><a href="{{ url_for('get_vnic_attachments_route') }}">Show VNIC Attachments</a></h3></div>
+        <div><h3><a href="{{ url_for('get_vcn_compute_digest_route') }}">Show VCNs with Attached Compute Digest</a></h3></div>
+        <div><h3><a href="{{ url_for('get_config_route') }}">Show Configuration</a></h3></div>
+        <div><h3><a href="{{ url_for('get_oci_user_route') }}">Show User</a></h3></div>
         <hr>
-        <div><h3><a href="/config">Show Configuration</a></h3></div>
-        <div><h3><a href="/user">Show User</a></h3></div>
 
         {% block content %}{% endblock %}
     </body>
