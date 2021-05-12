@@ -1,24 +1,15 @@
-from flask import Flask, render_template, url_for
-from flask_bootstrap import Bootstrap
+from flask import render_template, url_for
 from werkzeug.utils import redirect
-
-from app.forms import CompartmentForm
+from app.forms import *
 from app.utils import *
 from app.oci_client import *
 from app.oci_config import *
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'Flask-WTF requires an encryption key - the string can be anything'
-
-# Flask-Bootstrap requires this line
-Bootstrap(app)
 
 
 @app.route('/')
 @app.route('/index')
 def default_route():
-    context = {'compartment_scope': app.config.get('compartment_scope')}
+    context = {'compartment_scope': get_compartment_scope()}
     return render_template('base.html', context=context)
 
 
@@ -36,7 +27,7 @@ def get_compartment_scope_route():
 
     if form.validate_on_submit():
         choice = form.compartment_field
-        app.config['compartment_scope'] = choice.data
+        set_compartment_scope(choice.data)
         return redirect(url_for('default_route'))
 
     return render_template('form.html', context=context, form=form)

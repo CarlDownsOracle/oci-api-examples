@@ -1,35 +1,23 @@
 import oci
 from oci.identity import IdentityClient
 from oci.core import VirtualNetworkClient, ComputeClient
-from app.oci_config import get_configuration
+from app.oci_config import get_configuration, get_compartment_scope
 
 config = get_configuration()
-tenancy = config.get('tenancy')
-compartment = config.get('compartment')
-
-if compartment is None:
-    compartment = tenancy
-
 identity_client = IdentityClient(config)
 compute_client = ComputeClient(config)
 network_client = VirtualNetworkClient(config)
 
 
-def get_search_scope():
-    return compartment
-
-
 def get_oci_user():
     user = identity_client.get_user(config["user"]).data
-    # print(identity_client)
-    # print(identity_client.base_client.endpoint)
     return user
 
 
 def get_compute_instances():
 
     try:
-        response = compute_client.list_instances(compartment_id=compartment)
+        response = compute_client.list_instances(compartment_id=get_compartment_scope())
         return response.data
     except Exception as e:
         return {"problem encountered": e.__repr__()}
@@ -38,7 +26,7 @@ def get_compute_instances():
 def get_vnic_attachments():
 
     try:
-        response = compute_client.list_vnic_attachments(compartment_id=compartment)
+        response = compute_client.list_vnic_attachments(compartment_id=get_compartment_scope())
         return response.data
     except Exception as e:
         return {"problem encountered": e.__repr__()}
@@ -47,7 +35,7 @@ def get_vnic_attachments():
 def get_vcns():
 
     try:
-        response = network_client.list_vcns(compartment_id=compartment)
+        response = network_client.list_vcns(compartment_id=get_compartment_scope())
         return response.data
     except Exception as e:
         return {"problem encountered": e.__repr__()}
@@ -56,7 +44,7 @@ def get_vcns():
 def get_subnets():
 
     try:
-        response = network_client.list_subnets(compartment_id=compartment)
+        response = network_client.list_subnets(compartment_id=get_compartment_scope())
         return response.data
     except Exception as e:
         return {"problem encountered": e.__repr__()}
@@ -129,4 +117,6 @@ def vcn_with_attached_compute():
 
     except Exception as e:
         return {"problem encountered": e.__repr__()}
+
+
 
