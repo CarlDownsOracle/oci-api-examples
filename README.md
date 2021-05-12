@@ -43,11 +43,6 @@ Start the local web server:
      * Restarting with stat
      * Debugger is active!
 
-## Compartment vs Tenancy
+Access from local browser:
 
-<code>compartment</code> OCID is not required in the OCI config file.  However, this code
-is looking for it as the main determiner of scope for your calls to OCI.  if
-<code>compartment</code> is not defined, it will fall back to <code>tenancy</code>.
-if you try to run this against an entire tenancy, you may get some 'not authorized' error codes, depending on
-the level of access of your credentials.
-
+    http://127.0.0.1:5000/

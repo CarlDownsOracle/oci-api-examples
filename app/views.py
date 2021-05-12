@@ -10,7 +10,7 @@ from app.oci_config import *
 @app.route('/index')
 def default_route():
     context = {'compartment_scope': get_compartment_scope()}
-    return render_template('base.html', context=context)
+    return render_template('home.html', context=context)
 
 
 @app.route('/config')

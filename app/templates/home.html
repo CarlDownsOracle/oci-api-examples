@@ -1,0 +1,81 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+OCI Utilities Example
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="mx-lg-auto">
+
+      <h1 class="pt-5 pb-2">OCI Utilities</h1>
+
+      <p class="lead">Oracle Cloud Infrastructure</p>
+
+        {% if context['compartment_scope'] == None -%}
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_config_route') }}">Show Configuration</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_oci_user_route') }}">Show User</a></li>
+            </ul>
+
+            <br />
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_compartment_scope_route') }}">Select Compartment</a></li>
+                <li class="list-group-item">
+                    <div class="alert alert-warning" role="alert">
+                        <p>You'll need to have a valid compartment selected to run this utility.</p>
+                    </div>
+                </li>
+            </ul>
+
+        {% else -%}
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_config_route') }}">Show Configuration</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_oci_user_route') }}">Show User</a></li>
+            </ul>
+
+            <br />
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_compartment_scope_route') }}">Change Compartment</a></li>
+                <li class="list-group-item">
+                    <div class="alert alert-success" role="alert">
+                        {{ context['compartment_scope'] }}
+                    </div>
+                </li>
+            </ul>
+
+            <br />
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_compute_route') }}">Show Compute Instances</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vcns_route') }}">Show VCNs</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_subnets_route') }}">Show Subnets</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vnic_attachments_route') }}">Show VNIC Attachments</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vcn_compute_digest_route') }}">Show VCNs with Attached Compute Digest</a></li>
+            </ul>
+
+        {% endif %}
+
+      <p class="pt-5"><strong>{{ message }}</strong></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
