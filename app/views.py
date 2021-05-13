@@ -41,67 +41,41 @@ def validate_route():
 
 @app.route('/user')
 def get_oci_user_route():
-    user = get_oci_user()
-    serialized = json.dumps(user, indent=2, cls=CustomJSONEncoder)
-    response = app.response_class(
-        response=serialized,
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    data = get_oci_user()
+    return serialize_response(data)
 
 
 @app.route('/compute')
 def get_compute_route():
     data = get_compute_instances()
-    serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
-    response = app.response_class(
-        response=serialized,
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    return serialize_response(data)
 
 
 @app.route('/attachments')
 def get_vnic_attachments_route():
     data = get_vnic_attachments()
-    serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
-    response = app.response_class(
-        response=serialized,
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    return serialize_response(data)
 
 
 @app.route('/vcns')
 def get_vcns_route():
     data = get_vcns()
-    serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
-    response = app.response_class(
-        response=serialized,
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    return serialize_response(data)
 
 
 @app.route('/subnets')
 def get_subnets_route():
     data = get_subnets()
-    serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
-    response = app.response_class(
-        response=serialized,
-        status=200,
-        mimetype='application/json'
-    )
-    return response
+    return serialize_response(data)
 
 
 @app.route('/vcn_with_attached_compute')
 def get_vcn_compute_digest_route():
     data = vcn_with_attached_compute()
+    return serialize_response(data)
+
+
+def serialize_response(data):
     serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
     response = app.response_class(
         response=serialized,
