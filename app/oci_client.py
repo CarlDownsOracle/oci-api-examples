@@ -1,7 +1,7 @@
 import oci
 from oci.identity import IdentityClient
 from oci.core import VirtualNetworkClient, ComputeClient
-from app.oci_config import get_configuration, get_compartment_scope
+from app.oci_config import get_configuration, get_compartment_scope, get_vcn_scope
 
 config = get_configuration()
 identity_client = IdentityClient(config)
@@ -46,6 +46,23 @@ def get_subnets():
     try:
         response = network_client.list_subnets(compartment_id=get_compartment_scope())
         return response.data
+    except Exception as e:
+        return {"problem encountered": e.__repr__()}
+
+
+def get_vcn_topology():
+
+    try:
+        response = network_client.get_vcn_topology(
+            compartment_id=get_compartment_scope(),
+            vcn_id=get_vcn_scope())
+
+            # access_level="ANY",
+            # query_compartment_subtree=True,
+            # if_none_match="Nothing-Matched")
+
+        return response.data
+
     except Exception as e:
         return {"problem encountered": e.__repr__()}
 
@@ -117,6 +134,4 @@ def vcn_with_attached_compute():
 
     except Exception as e:
         return {"problem encountered": e.__repr__()}
-
-
 

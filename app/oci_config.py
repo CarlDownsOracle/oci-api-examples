@@ -34,3 +34,12 @@ def set_compartment_scope(compartment):
 def get_compartment_scope():
     return app.config.get('compartment_scope')
 
+
+def set_vcn_scope(vcn):
+    vcn = vcn if vcn is not None and len(vcn) > 0 else None
+    app.config['vcn_scope'] = vcn
+
+
+def get_vcn_scope():
+    return app.config.get('vcn_scope')
+

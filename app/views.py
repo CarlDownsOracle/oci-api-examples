@@ -75,6 +75,13 @@ def get_vcn_compute_digest_route():
     return serialize_response(data)
 
 
+@app.route('/vcn_topology/<vcn>')
+def get_vcn_topology_route(vcn):
+    set_vcn_scope(vcn)
+    data = get_vcn_topology()
+    return serialize_response(data)
+
+
 def serialize_response(data):
     serialized = json.dumps(data, indent=2, cls=CustomJSONEncoder)
     response = app.response_class(
