@@ -70,6 +70,14 @@ OCI Utilities Example
                 <li class="list-group-item"><a href="{{ url_for('get_vcn_compute_digest_route') }}">Show VCNs with Attached Compute Digest</a></li>
             </ul>
 
+            <br />
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_compute_status_route') }}">Show Compute Instance Status</a></li>
+                <li class="list-group-item"><a href="{{ url_for('start_compute_route') }}">Start Compute Instances</a></li>
+                <li class="list-group-item"><a href="{{ url_for('stop_compute_route') }}">Stop Compute Instances</a></li>
+            </ul>
+
         {% endif %}
 
       <p class="pt-5"><strong>{{ message }}</strong></p>

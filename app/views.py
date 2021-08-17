@@ -45,10 +45,42 @@ def get_oci_user_route():
     return serialize_response(data)
 
 
-@app.route('/compute')
+# ========================
+# Compute
+# ========================
+
+@app.route('/compute_details')
 def get_compute_route():
-    data = get_compute_instances()
+    data = get_compute_instances_details()
     return serialize_response(data)
+
+
+@app.route('/compute_status')
+def get_compute_status_route():
+    data = get_compute_instances_status()
+    return serialize_response(data)
+
+
+@app.route('/compute_start')
+def start_compute_route():
+    data = start_all_compute_instances()
+    return serialize_response(data)
+
+
+@app.route('/compute_stop')
+def stop_compute_route():
+    data = stop_all_compute_instances()
+    return serialize_response(data)
+
+
+# ========================
+# Networking
+# ========================
+
+# @app.route('/public_ip/<ip_address>')
+# def get_public_ip_route(ip_address):
+#     data = get_public_ip(ip_address)
+#     return serialize_response(data)
 
 
 @app.route('/attachments')
