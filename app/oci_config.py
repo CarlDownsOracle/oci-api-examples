@@ -31,8 +31,21 @@ def set_compartment_scope(compartment):
     app.config['compartment_scope'] = compartment
 
 
+def get_tenancy_scope():
+    return get_configuration().get('tenancy')
+
+
 def get_compartment_scope():
     return app.config.get('compartment_scope')
+
+
+def get_compartment_scope_from_cookie(request):
+    ocid = request.cookies.get('oci-utilities-comp-ocid')
+    set_compartment_scope(compartment=ocid)
+
+
+def set_compartment_scope_to_cookie(resp):
+    resp.set_cookie('oci-utilities-comp-ocid', get_compartment_scope())
 
 
 def set_vcn_scope(vcn):
