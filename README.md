@@ -20,6 +20,10 @@ The following Web actions are supported:
 * Show VCN & Attached Compute Summary
 * Show Configuration
 * Show User
+* Show Compute Instance Status
+* Start Compute Instances
+* Stop Compute Instances
+* Show Usage Report
 
 ## Implementation
 
