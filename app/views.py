@@ -1,11 +1,12 @@
 from flask import render_template, url_for, request
 from werkzeug.utils import redirect
 from app.forms import *
-from app.oci_usage import *
 from app.utils import *
+
 from app.oci_client import *
 from app.oci_config import *
-
+from app.oci_usage import *
+from app.oci_search import *
 
 @app.route('/')
 @app.route('/index')
@@ -36,6 +37,13 @@ def get_compartment_scope_route():
         return resp
 
     return render_template('form.html', context=context, form=form)
+
+
+@app.route('/show_compartment_details')
+def get_compartment_details():
+    get_cookies(req=request)
+    data = search_by_ocid(get_compartment_scope())
+    return serialize_response(data)
 
 
 @app.route('/validate')
@@ -138,6 +146,18 @@ def get_vcn_topology_route(vcn):
 def get_usage_report():
     get_cookies(req=request)
     data = retrieve_usage_report()
+    return serialize_response(data)
+
+
+# ========================
+# Search
+# ========================
+
+
+@app.route('/search/<ocid>')
+def get_ocid_search_result(ocid):
+    get_cookies(req=request)
+    data = search_by_ocid(ocid)
     return serialize_response(data)
 
 
