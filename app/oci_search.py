@@ -1,7 +1,8 @@
 import oci
 from utils import *
+from app.oci_config import get_configuration, get_compartment_scope, get_vcn_scope
 
-config = oci.config.from_file()
+config = get_configuration()
 search_client = oci.resource_search.ResourceSearchClient(config)
 
 #  SAMPLE QUERIES

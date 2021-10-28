@@ -7,6 +7,7 @@ from app.oci_client import *
 from app.oci_config import *
 from app.oci_usage import *
 from app.oci_search import *
+from app.oci_block_storage import *
 
 @app.route('/')
 @app.route('/index')
@@ -89,6 +90,16 @@ def start_compute_route():
 def stop_compute_route():
     get_cookies(req=request)
     data = stop_all_compute_instances()
+    return serialize_response(data)
+
+# ========================
+# Block Storage
+# ========================
+
+@app.route('/block_volumes')
+def get_block_volumes_route():
+    get_cookies(req=request)
+    data = list_volumes(get_compartment_scope())
     return serialize_response(data)
 
 
