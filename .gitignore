@@ -26,3 +26,4 @@ tests/temp
 .wercker/
 temp
 venv/
+local.env
