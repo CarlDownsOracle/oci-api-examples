@@ -1,6 +1,7 @@
 from oci.config import validate_config
 from oci.config import from_file
-from app import app
+from app import flask_app
+import os
 
 configuration = None
 
@@ -14,7 +15,7 @@ def get_configuration():
 
     global configuration
     if configuration is None:
-        configuration = from_file()
+        configuration = from_file(profile_name=get_oci_profile_name())
         # print("configuration: {}".format(configuration))
 
     return configuration
@@ -28,7 +29,7 @@ def validate_configuration():
 
 def set_compartment_scope(compartment):
     compartment = compartment if compartment is not None and len(compartment) > 0 else None
-    app.config['compartment_scope'] = compartment
+    flask_app.config['compartment_scope'] = compartment
 
 
 def get_tenancy_scope():
@@ -36,7 +37,7 @@ def get_tenancy_scope():
 
 
 def get_compartment_scope():
-    return app.config.get('compartment_scope')
+    return flask_app.config.get('compartment_scope')
 
 
 def get_compartment_scope_from_cookie(request):
@@ -50,9 +51,12 @@ def set_compartment_scope_to_cookie(resp):
 
 def set_vcn_scope(vcn):
     vcn = vcn if vcn is not None and len(vcn) > 0 else None
-    app.config['vcn_scope'] = vcn
+    flask_app.config['vcn_scope'] = vcn
 
 
 def get_vcn_scope():
-    return app.config.get('vcn_scope')
+    return flask_app.config.get('vcn_scope')
+
+def get_oci_profile_name():
+    return os.environ.get('OCI_CLI_PROFILE', 'DEFAULT')
 
