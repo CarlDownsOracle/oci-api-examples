@@ -7,10 +7,17 @@ from app.oci_client import *
 from app.oci_config import *
 from app.oci_usage import *
 from app.oci_search import *
+from app.oci_audit import *
 from app.oci_block_storage import *
 from app.oci_log_search import *
+from app.oci_monitoring import *
 
 from app import flask_app
+import logging
+
+logging_level = os.getenv('LOGGING_LEVEL', 'DEBUG')
+loggers = [logging.getLogger()] + [logging.getLogger(name) for name in logging.root.manager.loggerDict]
+[logger.setLevel(logging.getLevelName(logging_level)) for logger in loggers]
 
 @flask_app.route('/')
 @flask_app.route('/index')
@@ -175,19 +182,53 @@ def get_ocid_search_result(ocid):
     return serialize_response(data)
 
 
+# ========================
+# Log Search
+# ========================
+
 @flask_app.route('/search-logs/<log_group_ocid>/<log_ocid>')
 def get_ocid_search_logs_route(log_group_ocid, log_ocid):
     get_cookies(req=request)
     data = search_logs(log_group_ocid, log_ocid)
     return serialize_response(data)
 
-@flask_app.route('/test')
-def cox():
-    log_group_ocid = 'ocid1.loggroup.oc1.phx.amaaaaaaa752xmyar32ywikjgm5beoquwepoz5lydlkuyu5z52n66y6vcbha'
-    custom_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyaxrhcps4eoiouseyx4cnaui5fiia3dtxwlfx7ouhlhxia'
-    flow_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyavzfnpmjgh6gdr4xphynay5pwct3dwkenyd3qb2qiomba'
+# @flask_app.route('/test1')
+# def test1():
+#     log_group_ocid = 'ocid1.loggroup.oc1.phx.amaaaaaaa752xmyar32ywikjgm5beoquwepoz5lydlkuyu5z52n66y6vcbha'
+#     custom_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyaxrhcps4eoiouseyx4cnaui5fiia3dtxwlfx7ouhlhxia'
+#     flow_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyavzfnpmjgh6gdr4xphynay5pwct3dwkenyd3qb2qiomba'
+#     get_cookies(req=request)
+#     data = search_logs(log_group_ocid, flow_log_ocid)
+
+# ========================
+# Custom Metrics
+# ========================
+
+@flask_app.route('/metric')
+def metric():
     get_cookies(req=request)
-    data = search_logs(log_group_ocid, flow_log_ocid)
+    data = put_metric()
+    return serialize_response(data)
+
+
+# ========================
+# Audit Events
+# ========================
+
+@flask_app.route('/audit')
+def get_audit_events():
+    get_cookies(req=request)
+    data = list_audit_events()
+    return serialize_response(data)
+
+# ========================
+# Cross Regional
+# ========================
+
+@flask_app.route('/search-cross-regional')
+def get_search_cross_regional():
+    get_cookies(req=request)
+    data = exec_cross_regional(['us-phoenix-1','ap-chuncheon-1'], list_audit_events)
     return serialize_response(data)
 
 # ========================

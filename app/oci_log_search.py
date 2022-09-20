@@ -24,7 +24,8 @@ def search_logs(log_group_ocid, log_ocid):
     details = oci.loggingsearch.models.SearchLogsDetails(
         time_start=time_started,
         time_end=time_ended,
-        search_query=search_query,is_return_field_info=False)
+        search_query=search_query,
+        is_return_field_info=False)
 
     response = client.search_logs(search_logs_details=details,limit=10)
 

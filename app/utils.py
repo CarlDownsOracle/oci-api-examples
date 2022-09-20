@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class CustomJSONEncoder(json.JSONEncoder):
@@ -39,3 +39,18 @@ def summarize(data):
         summary.append(line2)
 
     return summary
+
+
+def get_now_timestamp():
+    return datetime.now().timestamp()
+
+def datetime_to_logging_service_iso_format(value: datetime):
+    return value.isoformat()[:-3] + "Z"
+
+
+def datetime_to_iso_format(value: datetime):
+    iso_format = value.isoformat()
+    return iso_format.replace("+00:00", "Z")
+
+def get_now_utc():
+    return datetime.now(timezone.utc)

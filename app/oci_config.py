@@ -27,17 +27,26 @@ def validate_configuration():
     # print("configuration validated")
 
 
-def set_compartment_scope(compartment):
-    compartment = compartment if compartment is not None and len(compartment) > 0 else None
-    flask_app.config['compartment_scope'] = compartment
-
-
 def get_tenancy_scope():
     return get_configuration().get('tenancy')
 
 
+def get_region_scope():
+    return get_configuration().get('region')
+
+
+def set_scope(key: str, value: str):
+    global configuration
+    configuration[key] = value
+
+
 def get_compartment_scope():
     return flask_app.config.get('compartment_scope')
+
+
+def set_compartment_scope(compartment):
+    compartment = compartment if compartment is not None and len(compartment) > 0 else None
+    flask_app.config['compartment_scope'] = compartment
 
 
 def get_compartment_scope_from_cookie(request):
