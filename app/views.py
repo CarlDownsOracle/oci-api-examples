@@ -23,7 +23,11 @@ loggers = [logging.getLogger()] + [logging.getLogger(name) for name in logging.r
 @flask_app.route('/index')
 def default_route():
     get_cookies(req=request)
-    context = {'compartment_scope': get_compartment_scope()}
+    context = {
+        'compartment_scope': get_compartment_scope(),
+        'log_group_scope': get_log_group_scope_from_cookie(request),
+        'log_scope': get_log_scope_from_cookie(request),
+    }
     return render_template('home.html', context=context)
 
 
@@ -69,7 +73,6 @@ def get_oci_user_route():
     get_cookies(req=request)
     data = get_oci_user()
     return serialize_response(data)
-
 
 # ========================
 # Compute
@@ -171,7 +174,7 @@ def get_usage_report():
 
 
 # ========================
-# Search
+# Generic Search
 # ========================
 
 
@@ -183,22 +186,70 @@ def get_ocid_search_result(ocid):
 
 
 # ========================
+# Logging
+# ========================
+
+@flask_app.route('/choose_log_group', methods=['GET', 'POST'])
+def get_log_group_scope_route():
+    get_cookies(req=request)
+    context = {}
+    form = LogGroupForm()
+
+    if form.validate_on_submit():
+        choice = form.log_group_field
+        set_log_group_scope(choice.data)
+        resp = redirect(url_for('default_route'))
+        set_log_group_scope_to_cookie(resp)
+        return resp
+
+    return render_template('form.html', context=context, form=form)
+
+
+@flask_app.route('/choose_log', methods=['GET', 'POST'])
+def get_log_scope_route():
+    get_cookies(req=request)
+    context = {}
+    form = LogForm()
+
+    if form.validate_on_submit():
+        choice = form.log_field
+        set_log_scope(choice.data)
+        resp = redirect(url_for('default_route'))
+        set_log_scope_to_cookie(resp)
+        return resp
+
+    return render_template('form.html', context=context, form=form)
+
+
+# ========================
 # Log Search
 # ========================
 
-@flask_app.route('/search-logs/<log_group_ocid>/<log_ocid>')
-def get_ocid_search_logs_route(log_group_ocid, log_ocid):
+@flask_app.route('/search-logs')
+def get_search_logs_route():
     get_cookies(req=request)
+    log_group_ocid = get_log_group_scope()
+    log_ocid = get_log_scope()
+
+    if log_group_ocid is None or log_ocid is None:
+        raise UserWarning('need to set both log group OCID and log OCID')
+
     data = search_logs(log_group_ocid, log_ocid)
     return serialize_response(data)
 
-# @flask_app.route('/test1')
-# def test1():
-#     log_group_ocid = 'ocid1.loggroup.oc1.phx.amaaaaaaa752xmyar32ywikjgm5beoquwepoz5lydlkuyu5z52n66y6vcbha'
-#     custom_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyaxrhcps4eoiouseyx4cnaui5fiia3dtxwlfx7ouhlhxia'
-#     flow_log_ocid = 'ocid1.log.oc1.phx.amaaaaaaa752xmyavzfnpmjgh6gdr4xphynay5pwct3dwkenyd3qb2qiomba'
-#     get_cookies(req=request)
-#     data = search_logs(log_group_ocid, flow_log_ocid)
+
+@flask_app.route('/search-logs/where/{where_clause}')
+def get_search_logs_where_route(where_clause):
+    get_cookies(req=request)
+    log_group_ocid = get_log_group_scope()
+    log_ocid = get_log_scope()
+
+    if log_group_ocid is None or log_ocid is None:
+        raise UserWarning('need to set both log group OCID and log OCID')
+
+    data = search_logs(log_group_ocid, log_ocid, where_clause=where_clause)
+    return serialize_response(data)
+
 
 # ========================
 # Custom Metrics

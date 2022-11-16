@@ -1,6 +1,8 @@
 import oci
+from datetime import timedelta
 from app.utils import *
 from app.oci_config import *
+import logging
 
 config = get_configuration()
 # client = oci.resource_search.LogSearchClient(config)
@@ -9,21 +11,23 @@ client = oci.loggingsearch.LogSearchClient(config)
 
 # see https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/using_the_api_searchlogs.htm
 
-def search_logs(log_group_ocid, log_ocid):
+def search_logs(log_group_ocid, log_ocid, minutes_back=60, where_clause=None):
 
-    # search_query = "search \"{}/{}/{}\"".\
-    #     format(get_compartment_scope(), log_group_ocid, log_ocid)
-
-    search_query = "search \"{}/{}/{}\" | where data.action = 'ACCEPT'".\
+    search_query = "search \"{}/{}/{}\"".\
         format(get_compartment_scope(), log_group_ocid, log_ocid)
 
-    print(search_query)
-    time_started = datetime.fromisoformat('2022-03-23')
-    time_ended = datetime.fromisoformat('2022-03-25')
+    if where_clause:
+        search_query = "{} | {}".format(search_query, where_clause)
+
+    logging.info(search_query)
+
+    now = get_now_utc()
+    start_time = now - timedelta(minutes=minutes_back)
+    end_time = now
 
     details = oci.loggingsearch.models.SearchLogsDetails(
-        time_start=time_started,
-        time_end=time_ended,
+        time_start=start_time,
+        time_end=end_time,
         search_query=search_query,
         is_return_field_info=False)
 
