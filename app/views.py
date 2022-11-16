@@ -246,22 +246,32 @@ def get_search_logs_route():
     log_group_ocid = get_log_group_scope()
     log_ocid = get_log_scope()
 
-    if log_group_ocid is None or log_ocid is None:
-        raise UserWarning('need to set both log group OCID and log OCID')
-
     data = search_logs(log_group_ocid, log_ocid)
     return serialize_response(data)
 
 
-@flask_app.route('/search-logs/where/{where_clause}')
-def get_search_logs_where_route(where_clause):
+@flask_app.route('/search-logs-for-content', methods=['GET', 'POST'])
+def get_search_logs_for_content_form_route():
+    get_cookies(req=request)
+
+    context = {}
+    form = LogSearchForContent()
+
+    if form.validate_on_submit():
+        choice = form.log_content_field
+        resp = redirect(url_for('get_search_logs_for_content_exec_route', content=choice.data))
+        return resp
+
+    return render_template('form.html', context=context, form=form)
+
+
+@flask_app.route('/search-logs-for-content/<content>')
+def get_search_logs_for_content_exec_route(content):
     get_cookies(req=request)
     log_group_ocid = get_log_group_scope()
     log_ocid = get_log_scope()
 
-    if log_group_ocid is None or log_ocid is None:
-        raise UserWarning('need to set both log group OCID and log OCID')
-
+    where_clause = "logContent='*{}*' ".format(content)
     data = search_logs(log_group_ocid, log_ocid, where_clause=where_clause)
     return serialize_response(data)
 

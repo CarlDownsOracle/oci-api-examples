@@ -5,19 +5,30 @@ from app.oci_config import *
 import logging
 
 config = get_configuration()
-# client = oci.resource_search.LogSearchClient(config)
-# client = LogSearchClient(config)
 client = oci.loggingsearch.LogSearchClient(config)
 
 # see https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/using_the_api_searchlogs.htm
 
+@problem_catcher()
 def search_logs(log_group_ocid, log_ocid, minutes_back=60, where_clause=None):
 
-    search_query = "search \"{}/{}/{}\"".\
-        format(get_compartment_scope(), log_group_ocid, log_ocid)
+    search_scope = 'search "{}"'.format(get_compartment_scope())
+    log_group_ocid = log_group_ocid.strip() if log_group_ocid else None
+    log_ocid = log_ocid.strip() if log_ocid else None
+
+    if log_group_ocid:
+        search_scope = 'search "{}/{}"'.format(get_compartment_scope(), log_group_ocid)
+
+        if log_ocid:
+            search_scope = 'search "{}/{}/{}"'.format(get_compartment_scope(), log_group_ocid, log_ocid)
 
     if where_clause:
-        search_query = "{} | {}".format(search_query, where_clause)
+        search_query = '{}|{}'.format(search_scope, where_clause)
+    else:
+        search_query = search_scope
+
+    # search_query = "search \"{}/{}/{}\"".\
+    #     format(get_compartment_scope(), log_group_ocid, log_ocid)
 
     logging.info(search_query)
 

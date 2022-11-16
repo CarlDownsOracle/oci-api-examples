@@ -21,6 +21,7 @@ OCI Utilities Example
     <div class="mx-lg-auto">
 
       <h1 class="pt-5 pb-2">OCI Utilities</h1>
+        <p class="text-warning">How to use OCI APIs!</p>
 
         <p class="lead">Configuration</p>
 
@@ -88,7 +89,8 @@ OCI Utilities Example
                 </li>
             </ul>
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_search_logs_route') }}">Search Logs / past 60 minutes / limit 10 records</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_for_content_form_route') }}">Search Log for Content / past 60 minutes / limit 10 records</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_route') }}">Show Log / past 60 minutes / limit 10 records</a></li>
             </ul>
 
             <br />

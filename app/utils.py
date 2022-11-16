@@ -2,6 +2,20 @@ import json
 from datetime import datetime, timezone
 
 
+def problem_catcher():
+    """
+    """
+
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            try:
+                response = func(*args, **kwargs)
+            except BaseException as err:
+                return {'problem':err}
+        return wrapper
+    return decorator
+
+
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if hasattr(obj, '__dict__'):
