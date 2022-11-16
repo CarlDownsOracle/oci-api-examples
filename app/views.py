@@ -255,8 +255,8 @@ def get_search_logs_where_route(where_clause):
 # Custom Metrics
 # ========================
 
-@flask_app.route('/metric')
-def metric():
+@flask_app.route('/put_custom_metric')
+def put_custom_metric_route():
     get_cookies(req=request)
     data = put_metric()
     return serialize_response(data)
