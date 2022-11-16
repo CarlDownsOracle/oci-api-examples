@@ -266,20 +266,17 @@ def put_custom_metric_route():
 # Audit Events
 # ========================
 
-@flask_app.route('/audit')
-def get_audit_events():
+@flask_app.route('/list-audit')
+def get_audit_events_route():
     get_cookies(req=request)
     data = list_audit_events()
     return serialize_response(data)
 
-# ========================
-# Cross Regional
-# ========================
 
-@flask_app.route('/search-cross-regional')
-def get_search_cross_regional():
+@flask_app.route('/list-audit-cross-regional')
+def get_audit_events_across_regions_route():
     get_cookies(req=request)
-    data = exec_cross_regional(['us-phoenix-1','ap-chuncheon-1'], list_audit_events)
+    data = exec_cross_regional(['us-phoenix-1','us-ashburn-1'], list_audit_events)
     return serialize_response(data)
 
 # ========================

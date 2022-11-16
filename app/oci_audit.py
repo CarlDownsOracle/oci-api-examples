@@ -1,5 +1,5 @@
 import oci
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.utils import *
 from app.oci_config import *
 
@@ -26,20 +26,14 @@ def exec_cross_regional(regions: list, fn):
     return combined
 
 
-def list_audit_events():
+def list_audit_events(minutes_back=5):
 
     # agent needs to be rebuilt each time because region scope can change where it's pointed
     audit_client = oci.audit.AuditClient(config)
 
-    start_time = datetime.fromisoformat('2022-05-01')
-    # start_time=datetime.strptime(
-    #     "2014-08-30T03:51:11.684Z",
-    #     "%Y-%m-%dT%H:%M:%S.%fZ"),
-
-    end_time = datetime.fromisoformat('2022-05-02')
-    # end_time=datetime.strptime(
-    #     "2028-11-21T23:41:29.262Z",
-    #     "%Y-%m-%dT%H:%M:%S.%fZ"),
+    now = get_now_utc()
+    start_time = now - timedelta(minutes=minutes_back)
+    end_time = now
 
     response = audit_client.list_events(
         compartment_id=get_compartment_scope(),
