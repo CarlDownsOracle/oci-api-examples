@@ -62,7 +62,7 @@ def get_compartment_details():
 
 
 @flask_app.route('/validate')
-def validate_route():
+def get_validate_route():
     get_cookies(req=request)
     validate_configuration()
     return 'Configuration is valid'
@@ -178,8 +178,23 @@ def get_usage_report():
 # ========================
 
 
-@flask_app.route('/search/<ocid>')
-def get_ocid_search_result(ocid):
+@flask_app.route('/search-for-ocid', methods=['GET', 'POST'])
+def get_search_for_ocid_form_route():
+    get_cookies(req=request)
+
+    context = {}
+    form = SearchForOcidForm()
+
+    if form.validate_on_submit():
+        choice = form.ocid_field
+        resp = redirect(url_for('get_search_for_ocid_exec_route', ocid=choice.data))
+        return resp
+
+    return render_template('form.html', context=context, form=form)
+
+
+@flask_app.route('/search-for-ocid/<ocid>')
+def get_search_for_ocid_exec_route(ocid):
     get_cookies(req=request)
     data = search_by_ocid(ocid)
     return serialize_response(data)

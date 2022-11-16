@@ -16,3 +16,8 @@ class LogForm(FlaskForm):
     log_field = StringField('Log OCID to Search')
     log_field.data = 'ok'
     submit = SubmitField('Submit')
+
+class SearchForOcidForm(FlaskForm):
+    ocid_field = StringField('Enter an OCID to Search For')
+    ocid_field.data = 'ok'
+    submit = SubmitField('Submit')

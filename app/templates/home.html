@@ -22,18 +22,13 @@ OCI Utilities Example
 
       <h1 class="pt-5 pb-2">OCI Utilities</h1>
 
-      <p class="lead">Oracle Cloud Infrastructure</p>
+        <p class="lead">Configuration</p>
 
         {% if context['compartment_scope'] == None -%}
 
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_config_route') }}">Show Configuration</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_oci_user_route') }}">Show User</a></li>
-            </ul>
-
-            <br />
-
-            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_validate_route') }}">Validate Configuration</a></li>
                 <li class="list-group-item"><a href="{{ url_for('get_compartment_scope_route') }}">Select Compartment</a></li>
                 <li class="list-group-item">
                     <div class="alert alert-warning" role="alert">
@@ -46,27 +41,38 @@ OCI Utilities Example
 
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_config_route') }}">Show Configuration</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_oci_user_route') }}">Show User</a></li>
-            </ul>
-
-            <br />
-
-            <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_compartment_scope_route') }}">Change Compartment</a></li>
                 <li class="list-group-item">
                     <div class="alert alert-success" role="alert">
                         {{ context['compartment_scope'] }}
                     </div>
                 </li>
-                <li class="list-group-item"><a href="{{ url_for('get_compartment_details') }}">Show Compartment Details</a></li>
             </ul>
 
             <br />
 
-            <p class="lead">Logging Service</p>
+        <p class="lead">Identity and Security</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_log_group_scope_route') }}">Change Log Group</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_oci_user_route') }}">Show User Details</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_audit_events_route') }}">List Audit Events / past 5 minutes</a></li>
+            </ul>
+
+            <br />
+
+        <p class="lead">Search Service</p>
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_search_for_ocid_form_route') }}">Search by OCID</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_compartment_details') }}">Search by Compartment OCID</a></li>
+            </ul>
+
+            <br />
+
+        <p class="lead">Logging Service</p>
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{{ url_for('get_log_group_scope_route') }}">Choose Log Group</a></li>
                 <li class="list-group-item">
                     <div class="alert alert-success" role="alert">
                         {{ context['log_group_scope'] }}
@@ -74,7 +80,7 @@ OCI Utilities Example
                 </li>
             </ul>
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_log_scope_route') }}">Change Log</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_log_scope_route') }}">Choose Log</a></li>
                 <li class="list-group-item">
                     <div class="alert alert-success" role="alert">
                         {{ context['log_scope'] }}
@@ -87,22 +93,15 @@ OCI Utilities Example
 
             <br />
 
-            <p class="lead">Audit Service</p>
-
-            <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_audit_events_route') }}">List Audit Events / past 5 minutes</a></li>
-            </ul>
-
-            <br />
-
-            <p class="lead">Monitoring Service</p>
+        <p class="lead">Monitoring Service</p>
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('put_custom_metric_route') }}">Put Custom Metrics</a></li>
             </ul>
 
             <br />
 
-            <p class="lead">Compute Service</p>
+        <p class="lead">Compute Service</p>
+
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_compute_route') }}">Show Compute Instances</a></li>
                 <li class="list-group-item"><a href="{{ url_for('get_compute_status_route') }}">Show Compute Instance Status</a></li>
@@ -111,7 +110,8 @@ OCI Utilities Example
             </ul>
 
             <br />
-            <p class="lead">Networking Service</p>
+
+        <p class="lead">Networking Service</p>
 
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_vcns_route') }}">Show VCNs</a></li>
@@ -121,7 +121,8 @@ OCI Utilities Example
             </ul>
 
             <br />
-            <p class="lead">Storage Service</p>
+
+         <p class="lead">Storage Service</p>
 
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_block_volumes_route') }}">Show Block Volumes</a></li>
@@ -130,6 +131,7 @@ OCI Utilities Example
             <br />
 
         <p class="lead">Usage</p>
+
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_usage_report') }}">Show Usage Report</a></li>
             </ul>
