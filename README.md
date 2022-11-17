@@ -6,6 +6,17 @@
 
 This example code will get you started with the OCI Python API. 
 
+### API Client Coverage
+
+- Audit
+- Compute
+- Block Storage
+- Virtual Networking
+- Resource Search
+- Logging
+- Monitoring
+- Usage
+
 ### Prerequisites
 
 You will need an OCI tenancy.  Check out the [OCI Cloud Free Tier](https://www.oracle.com/cloud/free/)!
