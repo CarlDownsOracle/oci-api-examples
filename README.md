@@ -6,15 +6,16 @@
 
 This example code will get you started with the OCI Python API. 
 
-### API Client Coverage
+### API Clients In Use
 
 - Audit
+- Identity
 - Compute
 - Block Storage
 - Virtual Networking
 - Resource Search
-- Logging
-- Monitoring
+- Log Search
+- Monitoring / Put Custom Metrics
 - Usage
 
 ### Prerequisites

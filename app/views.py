@@ -3,7 +3,7 @@ from werkzeug.utils import redirect
 from app.forms import *
 from app.utils import *
 
-from app.oci_client import *
+from app.oci_compute_networking import *
 from app.oci_config import *
 from app.oci_usage import *
 from app.oci_search import *
