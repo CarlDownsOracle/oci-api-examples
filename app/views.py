@@ -38,7 +38,7 @@ def get_config_route():
     return response
 
 
-@flask_app.route('/choose_compartment', methods=['GET', 'POST'])
+@flask_app.route('/choose-compartment', methods=['GET', 'POST'])
 def get_compartment_scope_route():
     get_cookies(req=request)
     context = {}
@@ -54,7 +54,7 @@ def get_compartment_scope_route():
     return render_template('form.html', context=context, form=form)
 
 
-@flask_app.route('/show_compartment_details')
+@flask_app.route('/compartment-details')
 def get_compartment_details():
     get_cookies(req=request)
     data = search_by_ocid(get_compartment_scope())
@@ -78,28 +78,28 @@ def get_oci_user_route():
 # Compute
 # ========================
 
-@flask_app.route('/compute_details')
+@flask_app.route('/compute-details')
 def get_compute_route():
     get_cookies(req=request)
     data = get_compute_instances_details()
     return serialize_response(data)
 
 
-@flask_app.route('/compute_status')
+@flask_app.route('/compute-status')
 def get_compute_status_route():
     get_cookies(req=request)
     data = get_compute_instances_status()
     return serialize_response(data)
 
 
-@flask_app.route('/compute_start')
+@flask_app.route('/compute-start')
 def start_compute_route():
     get_cookies(req=request)
     data = start_all_compute_instances()
     return serialize_response(data)
 
 
-@flask_app.route('/compute_stop')
+@flask_app.route('/compute-stop')
 def stop_compute_route():
     get_cookies(req=request)
     data = stop_all_compute_instances()
@@ -109,7 +109,7 @@ def stop_compute_route():
 # Block Storage
 # ========================
 
-@flask_app.route('/block_volumes')
+@flask_app.route('/block-volumes')
 def get_block_volumes_route():
     get_cookies(req=request)
     data = list_volumes(get_compartment_scope())
@@ -147,14 +147,14 @@ def get_subnets_route():
     return serialize_response(data)
 
 
-@flask_app.route('/vcn_with_attached_compute')
+@flask_app.route('/vcn-with-attached-compute')
 def get_vcn_compute_digest_route():
     get_cookies(req=request)
     data = vcn_with_attached_compute()
     return serialize_response(data)
 
 
-@flask_app.route('/vcn_topology/<vcn>')
+@flask_app.route('/vcn-topology/<vcn>')
 def get_vcn_topology_route(vcn):
     get_cookies(req=request)
     set_vcn_scope(vcn)
@@ -204,7 +204,7 @@ def get_search_for_ocid_exec_route(ocid):
 # Logging
 # ========================
 
-@flask_app.route('/choose_log_group', methods=['GET', 'POST'])
+@flask_app.route('/choose-log-group', methods=['GET', 'POST'])
 def get_log_group_scope_route():
     get_cookies(req=request)
     context = {}
@@ -219,8 +219,15 @@ def get_log_group_scope_route():
 
     return render_template('form.html', context=context, form=form)
 
+@flask_app.route('/clear-log-group')
+def clear_log_group_scope_route():
+    set_log_group_scope(None)
+    resp = redirect(url_for('default_route'))
+    set_log_group_scope_to_cookie(resp)
+    return resp
 
-@flask_app.route('/choose_log', methods=['GET', 'POST'])
+
+@flask_app.route('/choose-log', methods=['GET', 'POST'])
 def get_log_scope_route():
     get_cookies(req=request)
     context = {}
@@ -234,6 +241,14 @@ def get_log_scope_route():
         return resp
 
     return render_template('form.html', context=context, form=form)
+
+
+@flask_app.route('/clear-log')
+def clear_log_scope_route():
+    set_log_scope(None)
+    resp = redirect(url_for('default_route'))
+    set_log_scope_to_cookie(resp)
+    return resp
 
 
 # ========================
@@ -250,7 +265,7 @@ def get_search_logs_route():
     return serialize_response(data)
 
 
-@flask_app.route('/search-logs-for-content', methods=['GET', 'POST'])
+@flask_app.route('/search-logs-for-content-form', methods=['GET', 'POST'])
 def get_search_logs_for_content_form_route():
     get_cookies(req=request)
 
@@ -259,7 +274,13 @@ def get_search_logs_for_content_form_route():
 
     if form.validate_on_submit():
         choice = form.log_content_field
-        resp = redirect(url_for('get_search_logs_for_content_exec_route', content=choice.data))
+
+        # handle case where user provides a search term (or not)
+        if len(choice.data):
+            resp = redirect(url_for('get_search_logs_for_content_exec_route', content=choice.data))
+        else:
+            resp = redirect(url_for('get_search_logs_route'))
+
         return resp
 
     return render_template('form.html', context=context, form=form)
@@ -280,7 +301,7 @@ def get_search_logs_for_content_exec_route(content):
 # Custom Metrics
 # ========================
 
-@flask_app.route('/put_custom_metric')
+@flask_app.route('/put-custom-metric')
 def put_custom_metric_route():
     get_cookies(req=request)
     data = put_metric()

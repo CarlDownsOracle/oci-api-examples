@@ -20,8 +20,8 @@ OCI Utilities Example
   <div class="row">
     <div class="mx-lg-auto">
 
-      <h1 class="pt-5 pb-2">OCI Utilities</h1>
-        <p class="text-danger">Oracle Cloud Infrastructure API examples</p>
+      <h1 class="pt-5">Oracle Cloud Infrastructure</h1>
+      <h2 class="pb-5 text-danger">API Examples</h2>
 
         <p class="lead">Configuration</p>
 
@@ -42,7 +42,10 @@ OCI Utilities Example
 
             <ul class="list-group">
                 <li class="list-group-item"><a href="{{ url_for('get_config_route') }}">Show Configuration</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_compartment_scope_route') }}">Change Compartment</a></li>
+                <li class="list-group-item">
+                    Compartment
+                    <a href="{{ url_for('get_compartment_scope_route') }}">(change compartment)</a>
+                </li>
                 <li class="list-group-item">
                     <div class="alert alert-success" role="alert">
                         {{ context['compartment_scope'] }}
@@ -64,8 +67,7 @@ OCI Utilities Example
         <p class="lead">Search Service</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_search_for_ocid_form_route') }}">Search by OCID</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_compartment_details') }}">Search by Compartment OCID</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_for_ocid_form_route') }}">Search Resources by OCID</a></li>
             </ul>
 
             <br />
@@ -73,24 +75,37 @@ OCI Utilities Example
         <p class="lead">Logging Service</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_log_group_scope_route') }}">Choose Log Group</a></li>
-                <li class="list-group-item">
-                    <div class="alert alert-success" role="alert">
-                        {{ context['log_group_scope'] }}
-                    </div>
-                </li>
-            </ul>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_log_scope_route') }}">Choose Log</a></li>
-                <li class="list-group-item">
-                    <div class="alert alert-success" role="alert">
-                        {{ context['log_scope'] }}
-                    </div>
-                </li>
-            </ul>
-            <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_search_logs_for_content_form_route') }}">Search Log for Content / past 60 minutes / limit 10 records</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_search_logs_route') }}">Show Log / past 60 minutes / limit 10 records</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_for_content_form_route') }}">Search Logs</a></li>
+
+                {% if context['log_group_scope'] == None -%}
+                    <li class="list-group-item"><a href="{{ url_for('get_log_group_scope_route') }}">Add Log Group Filter</a></li>
+                {% else -%}
+                    <li class="list-group-item">
+                        Filtering by Log Group
+                        <a href="{{ url_for('clear_log_group_scope_route') }}">(remove filter)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="alert alert-success" role="alert">
+                            {{ context['log_group_scope'] }}
+                        </div>
+                    </li>
+
+                        {% if context['log_scope'] == None -%}
+                            <li class="list-group-item"><a href="{{ url_for('get_log_scope_route') }}">Add Log Filter</a></li>
+                        {% else -%}
+                            <li class="list-group-item">
+                                Filtering by Log
+                                <a href="{{ url_for('clear_log_scope_route') }}">(remove filter)</a>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="alert alert-success" role="alert">
+                                    {{ context['log_scope'] }}
+                                </div>
+                            </li>
+                        {% endif %}
+
+                {% endif %}
+
             </ul>
 
             <br />
@@ -105,10 +120,10 @@ OCI Utilities Example
         <p class="lead">Compute Service</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_compute_route') }}">Show Compute Instances</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_compute_status_route') }}">Show Compute Instance Status</a></li>
-                <li class="list-group-item"><a href="{{ url_for('start_compute_route') }}">Start Compute Instances</a></li>
-                <li class="list-group-item"><a href="{{ url_for('stop_compute_route') }}">Stop Compute Instances</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_compute_route') }}">Show Compute Instances in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_compute_status_route') }}">Show Compute Instance Status in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('start_compute_route') }}">Start ALL Compute Instances in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('stop_compute_route') }}">Stop ALL Compute Instances in Compartment</a></li>
             </ul>
 
             <br />
@@ -116,10 +131,10 @@ OCI Utilities Example
         <p class="lead">Networking Service</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_vcns_route') }}">Show VCNs</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_subnets_route') }}">Show Subnets</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_vnic_attachments_route') }}">Show VNIC Attachments</a></li>
-                <li class="list-group-item"><a href="{{ url_for('get_vcn_compute_digest_route') }}">Show VCNs with Attached Compute Digest</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vcns_route') }}">Show All VCNs in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_subnets_route') }}">Show All Subnets in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vnic_attachments_route') }}">Show All VNIC Attachments in Compartment</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_vcn_compute_digest_route') }}">Show All VCNs with VNIC-Attached Compute in Compartment</a></li>
             </ul>
 
             <br />

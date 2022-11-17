@@ -18,10 +18,9 @@ class LogForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class LogSearchForContent(FlaskForm):
-    log_content_field = StringField('Enter log content (a string) to search for:')
+    log_content_field = StringField('Enter an optional content term to search for:')
     log_content_field.data = 'ok'
     submit = SubmitField('Submit')
-
 
 class SearchForOcidForm(FlaskForm):
     ocid_field = StringField('Enter an OCID to Search For:')
