@@ -2,25 +2,31 @@
 
 ## [Oracle Cloud Infrastructure](https://www.oracle.com/cloud/)
 
-[Python API](https://oracle-cloud-infrastructure-python-sdk.readthedocs.io/en/latest/)
+[Python API](https://docs.oracle.com/en-us/iaas/tools/python/latest)
 
-This example code will get you started accessing OCI Networking and Compute 
-information using the OCI Python API. Follow the above instructions 
-referenced in the link above.  
+This example code will get you started with the OCI Python API. 
 
-## Implementation
+### Prerequisites
 
-This is coded as a Flask app with Python 3 as a prerequisite. 
+You will need an OCI tenancy.  Check out the [OCI Cloud Free Tier](https://www.oracle.com/cloud/free/)!
 
-Set up a proper virtual env, activate it, 
-and install the requirements in your virtual env:
+See the [instructions](https://docs.oracle.com/en-us/iaas/tools/python/latest) for setting up API access to your tenancy.
 
-    my-machine $ python -m venv venv
+This is a good article describing key [OCI concepts](https://blogs.oracle.com/developers/post/introduction-to-the-key-concepts-of-oracle-cloud-infrastructure).
+
+You will need a OCI Compartment ID (aka, OCID) to run the app.  Compartments provide the IAM security scope for all API calls.  
+
+
+### Virtual Environment
+
+Set up a proper virtual env, activate it, and install the requirements in your virtual env:
+
+    my-machine $ python3 -m venv venv
     my-machine $ source venv/bin/activate
-    (venv) my-machine $ pip install -f requirements.txt
+    (venv) my-machine $ pip install -r requirements.txt
 
 
-Start the local web server:
+### Start the Flask web server:
 
     (venv) my-machine $ source start_server.sh
      * Serving Flask app "app/views.py" (lazy loading)
@@ -30,6 +36,8 @@ Start the local web server:
      * Restarting with stat
      * Debugger is active!
 
-Access from local browser:
+### Access from local browser:
 
     http://127.0.0.1:5000/
+
+
