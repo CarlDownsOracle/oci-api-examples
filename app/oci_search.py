@@ -10,7 +10,7 @@ search_client = oci.resource_search.ResourceSearchClient(config)
 # https://docs.cloud.oracle.com/en-us/iaas/Content/Search/Concepts/samplequeries.htm
 # https://console.us-ashburn-1.oraclecloud.com/search?
 
-
+@exception_sentinel()
 def search_by_ocid(ocid):
 
     if ocid is None:

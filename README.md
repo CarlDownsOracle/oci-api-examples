@@ -8,23 +8,6 @@ This example code will get you started accessing OCI Networking and Compute
 information using the OCI Python API. Follow the above instructions 
 referenced in the link above.  
 
-
-## Capabilities
-
-The following Web actions are supported:
-
-* Show Compute Instances
-* Show VCNs
-* Show VCN Subnets
-* Show VNIC Attachments
-* Show VCN & Attached Compute Summary
-* Show Configuration
-* Show User
-* Show Compute Instance Status
-* Start Compute Instances
-* Stop Compute Instances
-* Show Usage Report
-
 ## Implementation
 
 This is coded as a Flask app with Python 3 as a prerequisite. 

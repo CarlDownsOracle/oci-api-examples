@@ -5,6 +5,7 @@ from app.oci_config import *
 # Initialize service client with default config file
 core_client = oci.core.BlockstorageClient(config = get_configuration())
 
+@exception_sentinel()
 def list_volumes(compartment_id):
 
     # Send the request to service, some parameters are not required, see API

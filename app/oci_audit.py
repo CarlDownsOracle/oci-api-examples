@@ -26,6 +26,7 @@ def exec_cross_regional(regions: list, fn):
     return combined
 
 
+@exception_sentinel()
 def list_audit_events(minutes_back=5):
 
     # agent needs to be rebuilt each time because region scope can change where it's pointed

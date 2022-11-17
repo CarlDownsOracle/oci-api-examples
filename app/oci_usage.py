@@ -3,12 +3,13 @@ from oci.usage_api.models import CreateQueryDetails
 
 import oci
 from datetime import datetime, date
-from app.oci_config import get_configuration, get_compartment_scope, get_tenancy_scope
+from app.oci_config import *
+from app.utils import *
 
 config = get_configuration()
 usage_api_client = oci.usage_api.UsageapiClient(config)
 
-
+@exception_sentinel()
 def retrieve_usage_report():
 
     try:

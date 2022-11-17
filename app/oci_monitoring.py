@@ -12,6 +12,7 @@ monitoring_client = oci.monitoring.MonitoringClient(config, service_endpoint=ser
 # Send the request to service, some parameters are not required, see API
 # doc for more info
 
+@exception_sentinel()
 def put_metric():
 
     namespace = 'utilities'

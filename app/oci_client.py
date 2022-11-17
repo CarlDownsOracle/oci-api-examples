@@ -2,6 +2,7 @@ import oci
 from oci.identity import IdentityClient
 from oci.core import VirtualNetworkClient, ComputeClient
 from app.oci_config import get_configuration, get_compartment_scope, get_vcn_scope
+from app.utils import exception_sentinel
 
 config = get_configuration()
 identity_client = IdentityClient(config)
@@ -9,11 +10,13 @@ compute_client = ComputeClient(config)
 network_client = VirtualNetworkClient(config)
 
 
+@exception_sentinel()
 def get_oci_user():
     user = identity_client.get_user(config["user"]).data
     return user
 
 
+@exception_sentinel()
 def get_compute_instances_details():
 
     try:
@@ -23,6 +26,7 @@ def get_compute_instances_details():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def get_compute_instances_status():
 
     try:
@@ -38,6 +42,7 @@ def get_compute_instances_status():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def stop_all_compute_instances(soft_stop=True):
 
     try:
@@ -69,6 +74,7 @@ def stop_all_compute_instances(soft_stop=True):
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def start_all_compute_instances():
 
     try:
@@ -96,6 +102,7 @@ def start_all_compute_instances():
 #     return get_public_ip_by_ip_address_response
 
 
+@exception_sentinel()
 def get_vnic_attachments():
 
     try:
@@ -105,6 +112,7 @@ def get_vnic_attachments():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def get_vcns():
 
     try:
@@ -114,6 +122,7 @@ def get_vcns():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def get_subnets():
 
     try:
@@ -123,6 +132,7 @@ def get_subnets():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def get_vcn_topology():
 
     try:
@@ -140,6 +150,7 @@ def get_vcn_topology():
         return {"problem encountered": e.__repr__()}
 
 
+@exception_sentinel()
 def vcn_with_attached_compute():
 
     try:

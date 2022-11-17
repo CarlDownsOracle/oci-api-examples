@@ -2,14 +2,15 @@ import json
 from datetime import datetime, timezone
 
 
-def problem_catcher():
+def exception_sentinel():
     """
+    Catches any exceptions raised in decorated functions, returning a dict which can be displayed to the user via HTML
     """
 
     def decorator(func):
         def wrapper(*args, **kwargs):
             try:
-                response = func(*args, **kwargs)
+                return func(*args, **kwargs)
             except BaseException as err:
                 return {'problem':err}
         return wrapper
