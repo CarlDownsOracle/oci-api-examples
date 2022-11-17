@@ -52,4 +52,7 @@ Set up a proper virtual env, activate it, and install the requirements in your v
 
     http://127.0.0.1:5000/
 
+# User Interface
+
+![User Interface](./images/screenshot.png)
 
