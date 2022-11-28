@@ -17,9 +17,14 @@ class LogForm(FlaskForm):
     log_field.data = 'ok'
     submit = SubmitField('Submit')
 
-class LogSearchForContent(FlaskForm):
+class LogSearchForContentForm(FlaskForm):
     log_content_field = StringField('Enter an optional content term to search for:')
     log_content_field.data = 'ok'
+    submit = SubmitField('Submit')
+
+class LogSearchWindowForm(FlaskForm):
+    log_content_day_starting_offset = StringField('Enter the number of days prior to today to start from:')
+    log_content_day_starting_offset.data = 'ok'
     submit = SubmitField('Submit')
 
 class SearchForOcidForm(FlaskForm):

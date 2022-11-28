@@ -10,7 +10,7 @@ client = oci.loggingsearch.LogSearchClient(config)
 # see https://docs.oracle.com/en-us/iaas/Content/Logging/Concepts/using_the_api_searchlogs.htm
 
 @exception_sentinel()
-def search_logs(log_group_ocid, log_ocid, minutes_back=60, where_clause=None):
+def search_logs(log_group_ocid, log_ocid, start_minutes_back=60, end_minutes_back=0, where_clause=None):
 
     search_scope = 'search "{}"'.format(get_compartment_scope())
     log_group_ocid = log_group_ocid.strip() if log_group_ocid else None
@@ -30,8 +30,8 @@ def search_logs(log_group_ocid, log_ocid, minutes_back=60, where_clause=None):
     logging.info(search_query)
 
     now = get_now_utc()
-    start_time = now - timedelta(minutes=minutes_back)
-    end_time = now
+    start_time = now - timedelta(minutes=start_minutes_back)
+    end_time = now - timedelta(minutes=end_minutes_back)
 
     details = oci.loggingsearch.models.SearchLogsDetails(
         time_start=start_time,

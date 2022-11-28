@@ -270,7 +270,7 @@ def get_search_logs_for_content_form_route():
     get_cookies(req=request)
 
     context = {}
-    form = LogSearchForContent()
+    form = LogSearchForContentForm()
 
     if form.validate_on_submit():
         choice = form.log_content_field
@@ -294,6 +294,47 @@ def get_search_logs_for_content_exec_route(content):
 
     where_clause = "logContent='*{}*' ".format(content)
     data = search_logs(log_group_ocid, log_ocid, where_clause=where_clause)
+    return serialize_response(data)
+
+
+@flask_app.route('/search-log-window-form', methods=['GET', 'POST'])
+def get_search_logs_window_form_route():
+    get_cookies(req=request)
+
+    context = {}
+    form = LogSearchWindowForm()
+
+    if form.validate_on_submit():
+        choice = form.log_content_day_starting_offset
+
+        # handle case where user provides aa window
+        if len(choice.data):
+            resp = redirect(url_for('get_search_logs_window_route', days=choice.data))
+        else:
+            resp = redirect(url_for('get_search_logs_route'))
+
+        return resp
+
+    message = 'The Search API supports a maximum 14 day search "window".  Enter some value > 14 to see the effect.'
+    return render_template('form.html', context=context, form=form, message=message)
+
+
+@flask_app.route('/search-log-window/<days>')
+def get_search_logs_window_route(days):
+    get_cookies(req=request)
+    log_group_ocid = get_log_group_scope()
+    log_ocid = get_log_scope()
+
+    # The search API supports a maximum 14 day window.
+    window_in_minutes = 60 * 24 * 14
+    starting_offset_in_minutes = 60 * 24 * int(days)
+    ending_offset_in_minutes = starting_offset_in_minutes - window_in_minutes
+
+    data = search_logs(log_group_ocid,
+                       log_ocid,
+                       start_minutes_back=starting_offset_in_minutes,
+                       end_minutes_back=ending_offset_in_minutes)
+
     return serialize_response(data)
 
 

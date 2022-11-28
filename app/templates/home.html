@@ -75,7 +75,9 @@ OCI Utilities Example
         <p class="lead">Logging Service</p>
 
             <ul class="list-group">
-                <li class="list-group-item"><a href="{{ url_for('get_search_logs_for_content_form_route') }}">Search Logs</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_route') }}">Search Logs</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_for_content_form_route') }}">Search Logs for Content</a></li>
+                <li class="list-group-item"><a href="{{ url_for('get_search_logs_window_form_route') }}">Search Older Logs Using a Window</a></li>
 
                 {% if context['log_group_scope'] == None -%}
                     <li class="list-group-item"><a href="{{ url_for('get_log_group_scope_route') }}">Add Log Group Filter</a></li>
