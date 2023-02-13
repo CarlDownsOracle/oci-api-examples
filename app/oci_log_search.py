@@ -37,7 +37,7 @@ def search_logs(log_group_ocid, log_ocid, start_minutes_back=60, end_minutes_bac
         time_start=start_time,
         time_end=end_time,
         search_query=search_query,
-        is_return_field_info=False)
+        is_return_field_info=True)
 
     response = client.search_logs(search_logs_details=details,limit=10)
 
